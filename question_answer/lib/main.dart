@@ -7,7 +7,6 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
         home: Scaffold(
-      appBar: AppBar(title: Text("question answer")),
       backgroundColor: Colors.grey.shade900,
       body: QuizPage(),
     ));
@@ -20,6 +19,13 @@ class QuizPage extends StatefulWidget {
 }
 
 class QuizPageState extends State<QuizPage> {
+  List<Widget> scoreKeeper = [];
+  dynamic questions = [
+    {"question": "question1", "ans": "true"},
+    {"question": "question2", "ans": "false"},
+    {"question": "question3", "ans": "true"},
+  ];
+  int question_number = 0;
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -32,7 +38,9 @@ class QuizPageState extends State<QuizPage> {
             padding: EdgeInsets.all(10.0),
             child: Center(
               child: Text(
-                'This is where the question text will go.',
+                question_number < questions.length
+                    ? questions[question_number]['question']
+                    : "questions eneded",
                 textAlign: TextAlign.center,
                 style: TextStyle(
                   fontSize: 25.0,
@@ -56,7 +64,18 @@ class QuizPageState extends State<QuizPage> {
                 ),
               ),
               onPressed: () {
-                //The user picked true.
+                setState(() {
+                  if (questions[question_number]['ans'] == 'true') {
+                    scoreKeeper.add(Icon(Icons.check, color: Colors.green));
+                  } else {
+                    scoreKeeper.add(Icon(Icons.close, color: Colors.red));
+                  }
+                  // if (question_number + 1 != questions.length()) {
+                  question_number++;
+                  // }
+                });
+                print(question_number);
+                print(scoreKeeper);
               },
             ),
           ),
@@ -74,12 +93,50 @@ class QuizPageState extends State<QuizPage> {
                 ),
               ),
               onPressed: () {
-                //The user picked false.
+                setState(() {
+                  if (questions[question_number]['ans'] == 'false') {
+                    scoreKeeper.add(Icon(Icons.check, color: Colors.green));
+                  } else {
+                    scoreKeeper.add(Icon(Icons.close, color: Colors.red));
+                  }
+                  // if (question_number + 1 != questions.length()) {
+                  question_number++;
+                  // }
+                });
+                print(question_number);
+                print(scoreKeeper);
+              },
+            ),
+          ),
+        ),
+        Expanded(
+          child: Padding(
+            padding: EdgeInsets.all(15.0),
+            child: FlatButton(
+              color: Colors.blue,
+              child: Text(
+                'Reset Questions',
+                style: TextStyle(
+                  fontSize: 20.0,
+                  color: Colors.white,
+                ),
+              ),
+              onPressed: () {
+                setState(() {
+                  question_number=0;
+                  scoreKeeper.clear();
+                  // }
+                });
               },
             ),
           ),
         ),
         //TODO: Add a Row here as your score keeper
+        Expanded(
+          child: Row(
+            children: scoreKeeper,
+          ),
+        )
       ],
     );
   }
