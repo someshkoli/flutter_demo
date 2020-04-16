@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-
-const double bottomComtainerHeight = 60;
-const activeCardColor = 0xFF1D1E33;
-const bottomContainerColor = 0xFFEB1555;
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import './icon_content.dart';
+import './reusableCard.dart';
+import './designConstants.dart';
 
 class InputPage extends StatefulWidget {
   @override
@@ -10,6 +10,9 @@ class InputPage extends StatefulWidget {
 }
 
 class _InputPageState extends State<InputPage> {
+  bool maleCardPressed = false;
+  bool femaleCardPressed = false;
+  int height = 150;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -17,24 +20,46 @@ class _InputPageState extends State<InputPage> {
         title: Center(child: Text('BMI CALCULATOR')),
       ),
       body: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
         children: <Widget>[
           Expanded(
             child: Row(
               children: <Widget>[
                 Expanded(
                   child: GestureDetector(
-                    onTap: (){
-                      print("maincard was presed");
+                    onTap: () {
+                      setState(() {
+                        maleCardPressed = true;
+                        femaleCardPressed = false;
+                      });
                     },
                     child: ReusableWidget(
-                      color_v: Color(0xFF1D1E33),
+                      color_v: maleCardPressed
+                          ? Color(pressedactiveCardColor)
+                          : Color(activeCardColor),
+                      cardChild: CardChildIcon(
+                        icon: FontAwesomeIcons.male,
+                        text: 'Male',
+                      ),
                     ),
                   ),
                 ),
                 Expanded(
                   child: GestureDetector(
+                    onTap: () {
+                      setState(() {
+                        maleCardPressed = false;
+                        femaleCardPressed = true;
+                      });
+                    },
                     child: ReusableWidget(
-                      color_v: Color(0xFF1D1E33),
+                      color_v: femaleCardPressed
+                          ? Color(pressedactiveCardColor)
+                          : Color(activeCardColor),
+                      cardChild: CardChildIcon(
+                        icon: FontAwesomeIcons.female,
+                        text: 'Female',
+                      ),
                     ),
                   ),
                 ),
@@ -43,7 +68,53 @@ class _InputPageState extends State<InputPage> {
           ),
           Expanded(
             child: ReusableWidget(
-              color_v: Color(0xFF1D1E33),
+              color_v: Color(activeCardColor),
+              cardChild: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  Text(
+                    'Height',
+                    style: lableTextStyle,
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: <Widget>[
+                      Text(
+                        height.toString(),
+                        style: TextStyle(
+                          fontSize: 70,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      Text(
+                        'cm',
+                        style: lableTextStyle
+                      ),
+                    ],
+                  ),
+                  SliderTheme(
+                    data: SliderTheme.of(context).copyWith(
+                      thumbShape: RoundSliderThumbShape(enabledThumbRadius: 12,),
+                      overlayShape: RoundSliderOverlayShape(overlayRadius: 24),
+                      thumbColor: Color(0XFFEB1555),
+                      overlayColor: Color(0x28EB1555),
+                      activeTrackColor: Colors.white
+                    ),
+                    child: Slider(
+                      value: height.toDouble(),
+                      min: 100,
+                      max: 250,
+                      // activeColor: Colors.white,
+                      inactiveColor: Color(0XFF8D8E98),
+                      onChanged: (double newHeight) {
+                        setState(() {
+                          height = newHeight.toInt();
+                        });
+                      },
+                    ),
+                  )
+                ],
+              ),
             ),
           ),
           Expanded(
@@ -51,12 +122,12 @@ class _InputPageState extends State<InputPage> {
               children: <Widget>[
                 Expanded(
                   child: ReusableWidget(
-                    color_v: Color(0xFF1D1E33),
+                    color_v: Color(activeCardColor),
                   ),
                 ),
                 Expanded(
                   child: ReusableWidget(
-                    color_v: Color(0xFF1D1E33),
+                    color_v: Color(activeCardColor),
                   ),
                 ),
               ],
@@ -70,19 +141,6 @@ class _InputPageState extends State<InputPage> {
           )
         ],
       ),
-    );
-  }
-}
-
-class ReusableWidget extends StatelessWidget {
-  ReusableWidget({@required this.color_v});
-  final Color color_v;
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      margin: EdgeInsets.all(15),
-      decoration: BoxDecoration(
-          color: color_v, borderRadius: BorderRadius.circular(10)),
     );
   }
 }
