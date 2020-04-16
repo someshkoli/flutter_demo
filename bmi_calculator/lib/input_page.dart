@@ -13,6 +13,8 @@ class _InputPageState extends State<InputPage> {
   bool maleCardPressed = false;
   bool femaleCardPressed = false;
   int height = 150;
+  int weight = 50;
+  int age = 25;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -39,7 +41,7 @@ class _InputPageState extends State<InputPage> {
                           : Color(activeCardColor),
                       cardChild: CardChildIcon(
                         icon: FontAwesomeIcons.male,
-                        text: 'Male',
+                        text: 'MALE',
                       ),
                     ),
                   ),
@@ -58,7 +60,7 @@ class _InputPageState extends State<InputPage> {
                           : Color(activeCardColor),
                       cardChild: CardChildIcon(
                         icon: FontAwesomeIcons.female,
-                        text: 'Female',
+                        text: 'FEMALE',
                       ),
                     ),
                   ),
@@ -73,7 +75,7 @@ class _InputPageState extends State<InputPage> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
                   Text(
-                    'Height',
+                    'HEIGHT',
                     style: lableTextStyle,
                   ),
                   Row(
@@ -83,23 +85,22 @@ class _InputPageState extends State<InputPage> {
                         height.toString(),
                         style: TextStyle(
                           fontSize: 70,
-                          fontWeight: FontWeight.bold,
+                          fontWeight: FontWeight.w900,
                         ),
                       ),
-                      Text(
-                        'cm',
-                        style: lableTextStyle
-                      ),
+                      Text('cm', style: lableTextStyle),
                     ],
                   ),
                   SliderTheme(
                     data: SliderTheme.of(context).copyWith(
-                      thumbShape: RoundSliderThumbShape(enabledThumbRadius: 12,),
-                      overlayShape: RoundSliderOverlayShape(overlayRadius: 24),
-                      thumbColor: Color(0XFFEB1555),
-                      overlayColor: Color(0x28EB1555),
-                      activeTrackColor: Colors.white
-                    ),
+                        thumbShape: RoundSliderThumbShape(
+                          enabledThumbRadius: 12,
+                        ),
+                        overlayShape:
+                            RoundSliderOverlayShape(overlayRadius: 24),
+                        thumbColor: Color(0XFFEB1555),
+                        overlayColor: Color(0x28EB1555),
+                        activeTrackColor: Colors.white),
                     child: Slider(
                       value: height.toDouble(),
                       min: 100,
@@ -123,21 +124,132 @@ class _InputPageState extends State<InputPage> {
                 Expanded(
                   child: ReusableWidget(
                     color_v: Color(activeCardColor),
+                    cardChild: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: <Widget>[
+                        Text(
+                          'WEIGHT',
+                          style: lableTextStyle,
+                        ),
+                        Text(
+                          weight.toString(),
+                          style: TextStyle(
+                            fontSize: 50,
+                            fontWeight: FontWeight.w900,
+                          ),
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: <Widget>[
+                            FloatingActionButton(
+                              heroTag: 'decWei',
+                              onPressed: () {
+                                setState(() {
+                                  weight--;
+                                });
+                              },
+                              backgroundColor: Color(0XFF4C4F5E),
+                              child: Icon(
+                                Icons.remove,
+                                color: Colors.white,
+                              ),
+                            ),
+                            SizedBox(
+                              width: 20,
+                            ),
+                            FloatingActionButton(
+                              heroTag: 'incWei',
+                              onPressed: () {
+                                setState(() {
+                                  weight++;
+                                });
+                              },
+                              backgroundColor: Color(0XFF4C4F5E),
+                              child: Icon(
+                                Icons.add,
+                                color: Colors.white,
+                              ),
+                            ),
+                          ],
+                        )
+                      ],
+                    ),
                   ),
                 ),
                 Expanded(
                   child: ReusableWidget(
                     color_v: Color(activeCardColor),
+                    cardChild: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: <Widget>[
+                        Text(
+                          'AGE',
+                          style: lableTextStyle,
+                        ),
+                        Text(
+                          age.toString(),
+                          style: TextStyle(
+                            fontSize: 50,
+                            fontWeight: FontWeight.w900,
+                          ),
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: <Widget>[
+                            FloatingActionButton(
+                              heroTag: 'decAge',
+                              onPressed: () {
+                                setState(() {
+                                  age--;
+                                });
+                              },
+                              backgroundColor: Color(0XFF4C4F5E),
+                              child: Icon(
+                                Icons.remove,
+                                color: Colors.white,
+                              ),
+                            ),
+                            SizedBox(
+                              width: 20,
+                            ),
+                            FloatingActionButton(
+                              heroTag: 'incage',
+                              onPressed: () {
+                                setState(() {
+                                  age++;
+                                });
+                              },
+                              backgroundColor: Color(0XFF4C4F5E),
+                              child: Icon(
+                                Icons.add,
+                                color: Colors.white,
+                              ),
+                            ),
+                          ],
+                        )
+                      ],
+                    ),
                   ),
                 ),
               ],
             ),
           ),
-          Container(
-            color: Color(0xFFEB1555),
-            height: bottomComtainerHeight,
-            margin: EdgeInsets.only(top: 10),
-            width: double.infinity,
+          GestureDetector(
+            child: Container(
+              color: Color(0xFFEB1555),
+              height: bottomComtainerHeight,
+              margin: EdgeInsets.only(top: 10),
+              width: double.infinity,
+              child: Center(
+                child: Text(
+                  'CALCULATE',
+                  style: TextStyle(fontSize: 30),
+                ),
+              ),
+            ),
+            onTap: (){
+              Navigator.pushNamed(context, '/result', );
+            },
           )
         ],
       ),

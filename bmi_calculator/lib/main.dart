@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import './input_page.dart';
-
+import './bmi_result.dart';
 void main() => runApp(MyApp());
 
 class MyApp extends StatelessWidget {
@@ -12,7 +12,12 @@ class MyApp extends StatelessWidget {
         accentColor: Colors.teal,
         scaffoldBackgroundColor: Color(0xFF0A0E21),
         ),
-      home: InputPage(),
+      // home: InputPage(),
+      initialRoute: '/',
+      routes: {
+        '/': (context) => InputPage(),
+        '/result': (context) => Result()
+      },
       );
   }
 }
