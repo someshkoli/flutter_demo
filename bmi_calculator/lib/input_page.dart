@@ -3,6 +3,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import './icon_content.dart';
 import './reusableCard.dart';
 import './designConstants.dart';
+import './calculatebmi.dart';
 
 class InputPage extends StatefulWidget {
   @override
@@ -247,8 +248,11 @@ class _InputPageState extends State<InputPage> {
                 ),
               ),
             ),
-            onTap: (){
-              Navigator.pushNamed(context, '/result', );
+            onTap: () {
+              CalculatorBrain calc =
+                  CalculatorBrain(height: height, weight: weight);
+              Navigator.pushNamed(context, '/result',
+                  arguments: {height: height, weight: weight});
             },
           )
         ],
