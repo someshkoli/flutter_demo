@@ -252,7 +252,9 @@ class _InputPageState extends State<InputPage> {
               CalculatorBrain calc =
                   CalculatorBrain(height: height, weight: weight);
               Navigator.pushNamed(context, '/result',
-                  arguments: {height: height, weight: weight});
+                  arguments: {
+                    
+                  });
             },
           )
         ],
